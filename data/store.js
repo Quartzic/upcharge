@@ -3,9 +3,13 @@ import {FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE,} from
 import cartSlice from "./cartSlice";
 import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import settingsSlice from "./settingsSlice";
+import metadataSlice from "./metadataSlice";
 
 export const reducers = combineReducers({
   cart: cartSlice.reducer,
+  settings: settingsSlice.reducer,
+  metadata: metadataSlice.reducer
 });
 
 const persistedRootReducer = persistReducer({

@@ -30,7 +30,18 @@ target 'extracurricular' do
   # you should disable the next line.
   use_flipper!()
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+
   post_install do |installer|
+      installer.target_installation_results.pod_target_installation_results.each do |pod_name, target_installation_result|
+        target_installation_result.native_target.build_configurations.each do |config|
+          # For third party modules who have React-bridging dependency to search correct headers
+          config.build_settings['HEADER_SEARCH_PATHS'] ||= '$(inherited) '
+          config.build_settings['HEADER_SEARCH_PATHS'] << '"$(PODS_ROOT)/Headers/Private/React-bridging/react/bridging" '
+          config.build_settings['HEADER_SEARCH_PATHS'] << '"$(PODS_CONFIGURATION_BUILD_DIR)/React-bridging/react_bridging.framework/Headers" '
+        end
+      end
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end

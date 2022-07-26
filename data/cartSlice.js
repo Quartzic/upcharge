@@ -1,17 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import items  from "../data/items";
-
-const initialState = items.map((item) => {
-  return {
-    ...item,
-    quantity: 0,
-  };
-})
+import { useSelector } from "react-redux";
 
 const cartSlice = createSlice({
+
   name: "cart",
   // the initial state should have one element per item
-  initialState: initialState,
+  initialState: [],
   reducers: {
     add: (state, action) => {
       const item = state.find((i) => i.id === action.payload.id);
@@ -21,14 +15,29 @@ const cartSlice = createSlice({
       const item = state.find((i) => i.id === action.payload.id);
       item.quantity--;
     },
-    update: (state, action) => {
+    updateItem: (state, action) => {
       // find the item in the state and update its quantity
       const item = state.find((i) => i.id === action.payload.id);
       item.quantity = action.payload.quantity;
     },
-    reset: () => {
-      return initialState;
-    },
+    initialize: (state, action) => {
+      // ensure that a cart was passed in
+      if(action.payload) {
+        return action.payload.map((item) => {
+          // ensure all items have a quantity
+          if(item.quantity === undefined) {
+            return {
+              ...item,
+              quantity: 0
+            }
+          } else {
+            return item;
+          }
+        });
+      } else {
+        return [];
+      }
+    }
   },
 });
 
