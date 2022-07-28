@@ -4,7 +4,7 @@ const initialState = {
   items: [],
   categories: [],
   emailRecipients: [],
-  emailSender: "Nathan.GollerDeitsch@expeditors.com",
+  emailSender: "",
   postmarkAPIKey: "",
   updateURL: "",
 }
