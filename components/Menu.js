@@ -78,7 +78,7 @@ function Menu (props){
       "From": settings.emailSender,
       "To": settings.emailRecipients,
       "Subject": `${metadata.customerName} — ${metadata.refNumber}`,
-      "TextBody": "A report is attached.",
+      "TextBody": "A report is attached. This is an automatic email; please do not reply.",
       "Attachments": [{
         "Name": `${metadata.customerName}-${metadata.refNumber}.csv`, // convert to base64 string
         "Content": Buffer.from(csv).toString("base64"), "ContentType": "text/csv",
