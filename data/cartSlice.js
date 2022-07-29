@@ -9,7 +9,9 @@ const cartSlice = createSlice({
   reducers: {
     add: (state, action) => {
       const item = state.find((i) => i.id === action.payload.id);
-      item.quantity++;
+      if(item.quantity < 9999){
+        item.quantity ++;
+      }
     },
     subtract: (state, action) => {
       const item = state.find((i) => i.id === action.payload.id);

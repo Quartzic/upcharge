@@ -1,5 +1,5 @@
 import {
-  Alert,
+  Alert, Keyboard, KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   Share,
@@ -33,7 +33,7 @@ export default function MainScreen({ navigation }) {
   }
   return (<><StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
     <SafeAreaView style={tw`dark:bg-black`}>
-      <View style={tw`flex flex-col h-full`}>
+      <KeyboardAvoidingView behavior={"height"} style={tw`flex flex-col h-full`}>
         {/*
         <TextInput
           style={tw`w-64 h-12 m-6 px-3 text-2xl border bg-white dark:bg-gray-100 dark:text-white shadow-md`}
@@ -43,14 +43,13 @@ export default function MainScreen({ navigation }) {
           <View style={{ ...tw`m-2 flex flex-col` }}>
 
             <MetadataView />
-
             <ScrollView style={tw`bg-white dark:bg-neutral-900 rounded-lg shadow-md p-4`}>
               {cart.length > 0 ? <SectionedItemsList items={cart} categories={settings.categories} /> :
                 <Text style={tw`dark:text-white`}>No items available. Check the app configuration.</Text>}
             </ScrollView>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
     <Menu openSettings={() => {
       navigation.navigate("Settings");

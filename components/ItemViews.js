@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  FlatList, Text, View, Alert, Pressable, Button,
+  FlatList, Text, View, Alert, Pressable, Button, TextInput,
 } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
@@ -12,6 +12,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import pluralize from "pluralize";
 import { useDispatch, useSelector } from "react-redux";
 import cartSlice from "../data/cartSlice";
+
+
 
 function RoundButton(props: { iconName: any, onPress: any }) {
   return <Pressable style={({ pressed }) => {
@@ -39,7 +41,7 @@ function Item(props: { item: any }) {
     </Pressable>);
 
   }
-  return (<Pressable
+  return (<View
       style={{
         ...tw`p-2 w-full md:w-1/3 lg:w-1/4`,
       }}
@@ -50,8 +52,12 @@ function Item(props: { item: any }) {
           <RoundButton iconName="remove" onPress={() => {
             dispatch(cartSlice.actions.subtract({ id: props.item.id }));
           }} />
-          <View style={tw`flex-col px-4 py-2`}>
-            <Text style={tw`text-3xl text-center flex-auto dark:text-white`}>{props.item.quantity}</Text>
+          <View style={tw`flex-col px-2 py-2`}>
+            <TextInput keyboardType='number-pad' style={tw`text-3xl text-center flex-auto dark:text-white`} onChangeText={(value) => {
+              dispatch(cartSlice.actions.updateItem({id: props.item.id, quantity: value}))
+            }} onEndEditing={(value) => {
+              dispatch(cartSlice.actions.updateItem({id: props.item.id, quantity: !isNaN(parseInt(value.nativeEvent.text)) ? parseInt(value.nativeEvent.text) : 0}))
+            }} value={props.item.quantity.toString()} maxLength={4} hitSlop={1}/>
             <Text
               style={tw`hidden sm:flex text-sm text-center flex-auto dark:text-white`}>{props.item.billingUnit && pluralize(props.item.billingUnit, props.item.quantity)}</Text>
           </View>
@@ -60,7 +66,7 @@ function Item(props: { item: any }) {
           }} />
         </View>
       </View>
-    </Pressable>
+    </View>
 
   );
 }
@@ -84,16 +90,20 @@ function ItemsSection(props) {
 
 function SectionedItemsList(props: { items: any[], categories: any[] }) {
   // for every category, display a section with all the items in that category
-  if (props.categories === undefined) {
-    return <ItemsSection key={0} items={props.items} />;
-  } else {
+
     let sections = props.categories.map((category, index) => {
       return <ItemsSection key={index} title={category.title}
                            items={props.items.filter(item => item.category === category.id)} />;
     });
 
+    let uncategorizedItems = props.items.filter(item => item.category === undefined);
+    if(uncategorizedItems.length > 0) {
+      sections.push(<ItemsSection key={sections.length} title="Uncategorized"
+                           items={uncategorizedItems} />);
+    }
+
     return sections;
   }
-}
+
 
 export default SectionedItemsList;

@@ -27,7 +27,7 @@
 
 The configuration file defines the items and categories that are available in the Upcharge app, and other miscellaneous settings. The app does not ship with a configuration, so you must create and manually deploy one to each device in use.
 
-> ### Configuration Schema
+### Configuration Schema
 
 | **Key**         | **Type**                  | **Description**                                                                                                                                                  |
 | --------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -38,7 +38,7 @@ The configuration file defines the items and categories that are available in th
 | postmarkAPIKey  | string                    | A valid API key for the Postmark service.                                                                                                                        |
 | updateURL       | string                    | The next update URL that will be used once this configuration file is installed.                                                                                 |
 
-> ### Item Schema
+### Item Schema
 
 | **Key**     | **Description**                            |
 | ----------- | ------------------------------------------ |
@@ -47,7 +47,7 @@ The configuration file defines the items and categories that are available in th
 | category    | The category that the item should show in. |
 | billingUnit | The *singular* unit that is being billed.  |
 
-> ### Category Schema
+### Category Schema
 
 | Key   | Description                           |
 | ----- | ------------------------------------- |
@@ -78,4 +78,26 @@ The configuration file defines the items and categories that are available in th
     "updateURL": "https://yourdomain.com/upcharge-configuration-v1.json"
 }
 ```
+
+## Changelog
+
+### v0.0.3
+
+- Features
+   - Manually input a quantity value
+
+### v0.0.2
+
+- Features
+   - Support Android share menu
+   - Dark Mode support
+   - Add Customer Name and Ref. Number to CSV export
+- Tweaks
+   - Require Customer Name and Ref. Number to share
+   - Switch Customer Name and Ref. Number ordering
+   - "Clear all" clears metadata fields
+
+### v0.0.1
+
+Initial release
 
