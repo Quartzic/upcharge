@@ -81,6 +81,11 @@ The configuration file defines the items and categories that are available in th
 
 ## Changelog
 
+### v0.0.4
+
+- Features
+  - Scan barcodes into Customer Name and Ref. Number fields
+
 ### v0.0.3
 
 - Features
